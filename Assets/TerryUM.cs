@@ -9,12 +9,15 @@ public class TerryUM : MonoBehaviour {
     public TextMeshProUGUI scorenum;
     public TextMeshProUGUI timenum;
     public TextMeshProUGUI avenum;
-    public TextMeshProUGUI[] currentMinute;
+    public TextMeshProUGUI[] minuteStats;
     private int currScore = 0;
+    private int[] scoreArray;
     private float timeElapsed = 0;
 
     private void Start()
     {
+        
+        StartCoroutine(currentMinutes());
         scorenum.text = currScore.ToString();
     }
     public void increaseScore()
@@ -32,7 +35,6 @@ public class TerryUM : MonoBehaviour {
     private float calculateTerryScore()
     {
         return (currScore * (60 / timeElapsed));
-        
     }
     private void Update()
     {
@@ -40,5 +42,12 @@ public class TerryUM : MonoBehaviour {
         timeElapsed += Time.deltaTime;
         timenum.text = "Time elapsed : " + ((int)timeElapsed).ToString() + " seconds ";
         avenum.text = "average UPM :" + calculateTerryScore().ToString("0");
+    }
+
+    IEnumerator currentMinutes()
+    {
+        scoreArray = new int[+1]; 
+        //scoreArray.add(currScore);
+        yield return new WaitForSecondsRealtime(60);
     }
 }
